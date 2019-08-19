@@ -25,3 +25,7 @@ Kafka is a message queue processing
 **Run test consumer**
 
 ```npm run consumer```
+
+## RestApi for kafka test
+
+>TODO
