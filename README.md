@@ -1,29 +1,27 @@
-# Usage
+# Kafka + ExpressJs
 
-## Docker Start up
+Kafka is a message queue processing 
 
-**Start a cluster:**
+## Usage
 
-docker-compose up -d
+**Docker Start up | start a cluster**
 
-**Add more brokers:**
-
-docker-compose scale kafka=3
+```docker-compose up -d```
 
 **Destroy a cluster:**
 
-docker-compose stop
+```docker-compose stop```
 
 ## Node Start up
 
 **Run Service Api**
 
-npm run serv
+```npm run serv```
 
 **Run test producer**
 
-npm run producer
+```npm run producer```
 
 **Run test consumer**
 
-npm run consumer
+```npm run consumer```
