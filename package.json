@@ -1,0 +1,22 @@
+{
+  "name": "kafkajs",
+  "version": "1.0.0",
+  "description": "kafkajs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serv": "./node_modules/nodemon/bin/nodemon.js ./src/app.js",
+    "consumer": "node ./src/consumer.js",
+    "producer": "node ./src/producer.js"
+  },
+  "keywords": [
+    "kafka"
+  ],
+  "author": "bubuMan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "kafkajs": "^1.10.0",
+    "nodemon": "^1.19.1"
+  }
+}
