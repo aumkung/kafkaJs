@@ -29,3 +29,7 @@ Kafka is a message queue processing
 ## RestApi for kafka test
 
 >TODO
+
+lib kafka-rest ที่อาจจะเอามาใช้ใน restful api
+
+https://github.com/confluentinc/kafka-rest-node
