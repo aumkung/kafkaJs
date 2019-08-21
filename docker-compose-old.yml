@@ -1,0 +1,95 @@
+version: '3.1'
+
+networks:
+    main:
+        driver: bridge
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+    networks:
+      - main
+    environment:
+      ZOO_SYNC_LIMIT: 5
+      ZOO_TICK_TIME: 2000
+      ZOO_SYNC_LIMIT: 5
+
+  kafka:
+    image: wurstmeister/kafka
+    command: [start-kafka.sh]
+    restart: always
+    ports:
+      - "9092:9092"
+    networks:
+      - main
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100  // for many broker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # kafka-rest:
+  #   image: nodefluent/kafka-rest
+  #   ports:
+  #     - 8082:8082
+  #   networks:
+  #     - main
+  #   links:
+  #     - kafka
+  #     - zookeeper
+  #   depends_on:
+  #     - kafka
+  #     - zookeeper
+  #   environment:
+  #     # DEBUG: "*"
+  #     KAFKA_REST_DEBUG: "all"
+  #     KAFKA_REST_HTTP_PORT: 8082
+  #     KAFKA_REST_CONSUMER_METADATA_BROKER_LIST: "kafka:9092"
+  #     KAFKA_REST_PRODUCER_METADATA_BROKER_LIST: "kafka:9092"
+
+  # kafka-rest-ui:
+  #   image: nodefluent/kafka-rest-ui
+  #   ports:
+  #     - 8000:8000
+  #   networks:
+  #     - main
+  #   links:
+  #     - kafka-rest
+  #   depends_on:
+  #     - kafka-rest
+  #   environment:
+  #     DEBUG: "*"
+  #     REACT_APP_KAFKA_REST_URL: "http://kafka-rest:8082/"
+  #     REACT_APP_TIMEOUT: "3000"
+  #     PROXY: "yes"
+
+  # kafka-rest:
+  #   image: confluentinc/cp-kafka-rest:5.3.0
+  #   depends_on:
+  #     - zookeeper
+  #     - kafka
+  #   ports:
+  #     - 8082:8082
+  #   environment:
+  #     KAFKA_REST_HOST_NAME: kafka-rest
+  #     KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka:9092'
+  #     KAFKA_REST_LISTENERS: "http://127.0.0.1:8082"
+
+  # kafka-topics-ui:
+  #   image: landoop/kafka-topics-ui
+  #   networks:
+  #       - main
+  #   ports:
+  #       - 8000:8000
+  #   environment:
+  #       KAFKA_REST_PROXY_URL: "http://kafka-rest:8082"
+  #       PROXY: "true"
+  #   depends_on:
+  #       - zookeeper
+  #       - kafka
+  #       - kafka-rest

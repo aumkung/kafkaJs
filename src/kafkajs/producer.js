@@ -13,7 +13,7 @@ const run = async () => {
     var pageview = 1
     for (i = 0;i <= pageview;i++) {
         await producer.send({
-            key: 'clip:pv',
+            key: 'gg1',
             topic: 'bubuMan',
             messages: [
                 { value: `pageview: ${i}` },
