@@ -10,13 +10,16 @@ const producer = kafka.producer()
 const run = async () => {
     // Producing
     await producer.connect()
-    var pageview = 1
+    var pageview = 10
     for (i = 0;i <= pageview;i++) {
         await producer.send({
-            key: 'gg1',
-            topic: 'bubuMan',
+            key: JSON.stringify(`test:pv:${i}`),
+            topic: 'bubuMan-topic-2',
             messages: [
-                { value: `pageview: ${i}` },
+                { value: JSON.stringify({
+                    id: i,
+                    pageview: 500
+                }) },
             ],
         })
         console.log(`produce pageview: ${i}`)

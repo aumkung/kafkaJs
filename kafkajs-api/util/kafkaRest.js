@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-module.exports = class KafkaRest {
+class KafkaRest {
     constructor(config) {
         this.axios = axios.create({
             baseURL: config.url,
@@ -24,15 +24,25 @@ module.exports = class KafkaRest {
         return meta
     }
 
-    topic (name = null) {
+    async topic (name = null) {
         if (name) {
-            this.axios.post(`/topics/${name}`, {}, {
-                headers: {'Content-Type': 'application/vnd.kafka.v1+json', 'Accept': 'application/vnd.kafka.v1+json, application/vnd.kafka+json; q=0.9, application/json; q=0.8'}
+            // console.log(name)
+            let meta = await this.axios.post(`/topics/${name}`, {}, {
+                headers: {
+                    'Accept': 'application/vnd.kafka.binary.v2+json', 
+                    'Content-Type': 'application/vnd.kafka.v2+json'
+                }
             }).then(res => {
-                console.log(res.data)
+                console.log('fuck yeeah')
+                return res.data
             }).catch(err => {
-                console.log(err.response.data)
+                console.log(err.response)
+                return err.response.data
             })
+
+            return meta
         } 
     }
  }
+
+ module.exports = KafkaRest

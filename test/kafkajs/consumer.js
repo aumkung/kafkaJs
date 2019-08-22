@@ -10,7 +10,7 @@ const consumer = kafka.consumer({ groupId: 'bubuMan-group' })
 const run = async () => {
     // Consuming
     await consumer.connect()
-    await consumer.subscribe({ topic: 'bubuMan', fromBeginning: false })
+    await consumer.subscribe({ topic: 'bubuMan-topic-2', fromBeginning: false })
     
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {

@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serv": "./node_modules/nodemon/bin/nodemon.js ./src/rest-kafka.js",
-    "consumer": "node ./src/consumer.js",
-    "producer": "node ./src/producer.js"
+    "js-consumer": "node ./kafkajs/consumer.js",
+    "js-producer": "node ./kafkajs/producer.js",
+    "rd-consumer": "node ./node-rdkafka/consumer.js",
+    "rd-producer": "node ./node-rdkafka/producer.js"
   },
   "keywords": [
     "kafka"
@@ -15,9 +16,6 @@
   "author": "bubuMan",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.0",
-    "express": "^4.17.1",
-    "kafka-rest": "0.0.5",
     "kafkajs": "^1.10.0",
     "node-rdkafka": "^2.7.1-2",
     "nodemon": "^1.19.1"

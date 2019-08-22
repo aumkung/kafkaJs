@@ -14,7 +14,7 @@ const runProducer = async (count) => {
       for (var i = 1;i < count;i++) {
           await producer.produce(
             // Topic to send the message to
-              'test-topic-2',
+              'bubuMan-topic-1',
             // optionally we can manually specify a partition for the message
             // this defaults to -1 - which will use librdkafka's default partitioner (consistent random for keyed messages, random for unkeyed messages)
               null,
