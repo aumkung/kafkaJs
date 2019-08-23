@@ -1,9 +1,12 @@
 const Kafka = require('node-rdkafka')
-
 const consumer = new Kafka.KafkaConsumer({
     'group.id': 'RestFul-Api-Kafka',
     'metadata.broker.list': '127.0.0.1:9092',
     }, {})
+
+//  config cafka rest
+const ElasticSearchClient = require('../../util/es-client')
+const client = new ElasticSearchClient()
 
 const runConsumer = async () => {
     // Flowing mode
@@ -20,13 +23,19 @@ const runConsumer = async () => {
 
     await consumer.on('data', (data) => {
         // Output the actual message contents
-        const result = {
-            partition: data.partition,
-            key: data.key.toString(),
-            value: data.value.toString()
-        }
+        // console.log('test')
+        // if (data) {
+            const result = {
+                partition: data.partition,
+                key: data.key.toString(),
+                value: data.value.toString(),
+                topic: data.topic
+            }
 
-        console.log(result)
+            client.index(result)
+            
+            console.log(result)
+        // }
     })
 }
 

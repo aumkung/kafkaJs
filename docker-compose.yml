@@ -1,14 +1,7 @@
 version: '3.1'
-
-networks:
-    main:
-        driver: bridge
-
 services:
   landoop:
     image: landoop/fast-data-dev
-    networks:
-      - main
     ports:
       # - 2181:2181
       - 3030:3030
@@ -23,3 +16,14 @@ services:
       - 9092:9092
     environment:
       ADV_HOST: 127.0.0.1
+
+  elasticsearch:
+    image: elasticsearch:7.3.0
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"

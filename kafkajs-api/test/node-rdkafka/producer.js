@@ -11,7 +11,7 @@ const runProducer = async (count) => {
 
   producer.on('ready', async () => {
     try {
-      for (var i = 1;i < count;i++) {
+      // for (var i = 1;i < count;i++) {
           await producer.produce(
             // Topic to send the message to
               'bubuMan-topic-1',
@@ -20,11 +20,12 @@ const runProducer = async (count) => {
               null,
             // Message to send. Must be a buffer
               Buffer.from(JSON.stringify({
-                  id: i,
-                  pageview: 500
+                  type: 'event',
+                  action: 'clip-viewcount',
+                  value: 'test2'
               })),
             // for keyed messages, we also specify the key - note that this field is optional
-            `test:pv:${i}`,
+            `event:clip:2`,
             // you can send a timestamp here. If your broker version supports it,
             // it will get added. Otherwise, we default to 0
             Date.now(),
@@ -32,8 +33,8 @@ const runProducer = async (count) => {
             // to your delivery reports
           )
 
-          console.log(`produce pageview: ${i}`)
-      }
+          console.log(`event:clip:2`)
+      // }
     } catch (err) {
       console.error('A problem occurred when sending our message');
       console.error(err);

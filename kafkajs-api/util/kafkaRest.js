@@ -26,12 +26,8 @@ class KafkaRest {
 
     async topic (name = null) {
         if (name) {
-            // console.log(name)
-            let meta = await this.axios.post(`/topics/${name}`, {}, {
-                headers: {
-                    'Accept': 'application/vnd.kafka.binary.v2+json', 
-                    'Content-Type': 'application/vnd.kafka.v2+json'
-                }
+            let meta = await this.axios.get(`/consumers/bubuMan-group/instances/127.0.0.1:9092/records?timeout=3000&max_bytes=300000`, {
+                headers: {'Accept': 'application/vnd.kafka.json.v2+json'}
             }).then(res => {
                 console.log('fuck yeeah')
                 return res.data
@@ -42,6 +38,11 @@ class KafkaRest {
 
             return meta
         } 
+    }
+
+    async brokers () {
+        let meta = await this.axios.get('/brokers', { headers: {'Accept': 'application/vnd.kafka.v2+json'} }).then(res => res.data).catch(err => err.response.data)
+        return meta
     }
  }
 

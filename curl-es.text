@@ -1,0 +1,68 @@
+ElasticSearch Curl
+
+create index
+curl -X PUT "localhost:9200/kafka_js?pretty" -H 'Content-Type: application/json'
+
+mapping index settings
+https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules.html
+
+create index
+curl -X PUT "localhost:9200/kafka_js?pretty" -H 'Content-Type: application/json' -d'
+{}
+'
+
+put mappings
+curl -X PUT "localhost:9200/kafka_js/_mapping?pretty" -H 'Content-Type: application/json' -d'
+{
+    "properties": {
+        "event" : {
+            "properties": {
+                "action": { 
+                    "type": "text" 
+                },
+                "value": { 
+                    "type": "text" 
+                }     
+            }
+        },
+        "test" : {
+            "properties": {
+                "foo": { 
+                    "type": "text" 
+                },
+                "bar": { 
+                    "type": "text" 
+                }     
+            }
+        }
+    }
+}
+'
+
+put setting
+curl -X PUT "localhost:9200/kafka_js/_settings?pretty" -H 'Content-Type: application/json' -d'
+{
+  "index.blocks.read_only_allow_delete": null
+}
+'
+
+Get index
+curl -X GET "localhost:9200/kafka_js?pretty"
+
+
+Delete index
+curl -X DELETE "localhost:9200/kafka_js?pretty"
+
+Indices exist check
+curl -I "localhost:9200/kafka_js?pretty"
+
+Post index
+curl -X POST "localhost:9200/kafka_js/event/_doc/?pretty" -H 'Content-Type: application/json' -d'
+{
+    "action" : "page-viewcount",
+    "value" : "clip:pv:1"
+}
+'
+
+
+
